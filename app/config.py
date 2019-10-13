@@ -14,10 +14,9 @@ else:
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY", 'long long string')
     CHAT_MESSAGES_PER_PAGE = 30
-    CHATROOM_ADMIN_EMAIL = os.getenv('CHATROOM_ADMIN_EMAIL', 'admin@helloflask.com')
+    CHAT_ADMIN_EMAIL = os.getenv('CHATROOM_ADMIN_EMAIL', '12@test.com')
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", prefix + os.path.join(basedir, "data.db"))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    CHAT_ADMIN_EMAIL = '12@test.com'
 
 
 class DevelopmentConfig(BaseConfig):
