@@ -39,7 +39,6 @@ $(document).ready(function () {
                     activateSemantics();
                 },
                 error: function () {
-                    alert('No more messages.');
                     $('.ui.loader').toggleClass('active');
                 }
             });
@@ -55,7 +54,7 @@ $(document).ready(function () {
     socket.on('new message', function (data) {
         message_count++;
         if (!document.hasFocus()) {
-            document.title = '(' + message_count + ') ' + 'CatChat';
+            document.title = '(' + message_count + ') ' + 'Chatroom';
         }
         if (data.user_id !== current_user_id) {
             messageNotify(data);
@@ -69,9 +68,16 @@ $(document).ready(function () {
     function new_message(e) {
         var $textarea = $('#message-textarea');
         var message_body = $textarea.val().trim();
+
         if (e.which === ENTER_KEY && !e.shiftKey && message_body) {
             e.preventDefault();
-            socket.emit('new message', message_body);
+            message = message_body
+            if(current_user_id===0){
+                alert(current_user_id===0)
+                socket.emit('new anonymous message', message);
+            } else {
+                socket.emit('new message', message);
+            }
             $textarea.val('')
         }
     }
@@ -190,7 +196,7 @@ $(document).ready(function () {
 
         $(window).focus(function () {
             message_count = 0;
-            document.title = 'CatChat';
+            document.title = 'Chatroom';
         });
 
         activateSemantics();

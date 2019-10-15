@@ -10,12 +10,12 @@ class AuthTestCase(BaseTestCase):
         data = response.get_data(as_text=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('Create Snippets', data)
-        self.assetNotIn('Sign in', data)
+        self.assertNotIn('Sign in', data)
 
     def test_fail_login(self):
         response = self.login(email="wrong@test.com", password='wrong-password')
         data = response.get_data(as_text=True)
-        self.assertIn('Either the email or password was incorrect.', data)
+        self.assertIn('Invalid credentials', data)
 
     def test_logout_user(self):
         self.login()
@@ -41,13 +41,13 @@ class AuthTestCase(BaseTestCase):
 
     def test_register_email_exist(self):
         response = self.client.post(url_for('auth.register'), data={
-            'email': 'test@test.com',
+            'email': 'common_user@test.com',
             'nickname': 'nick',
             'password': '123456'
         }, follow_redirects=True)
         data = response.get_data(as_text=True)
-        self.assertIn('The email is already registered, please log in.', data)
-        
+        self.assertIn('This email has been registered.', data)
+
 
 
 

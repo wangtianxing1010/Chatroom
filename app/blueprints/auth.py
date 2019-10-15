@@ -55,7 +55,7 @@ def register():
 
         user = User.query.filter_by(email=email).first()
         if user is not None:
-            flash('The email has been registered')
+            flash('This email has been registered.')
             return redirect(url_for('.login'))
 
         nickname = request.form['nickname']

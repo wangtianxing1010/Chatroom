@@ -20,15 +20,23 @@
                             <textarea rows="2" id="message-textarea"
                                       placeholder="Write your message here... Enter to send"></textarea>
                         {% else %}
-                            <div class="ui floating message">Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
-                                <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
-                            </div>
+                            <img class="input-avatar" src="https://www.gravatar.com/avatar?d=mm">
+                            <textarea rows="2" id="message-textarea"
+                                      placeholder="Send an anonymous message, but it won't be preserved"></textarea>
+
                         {% endif %}
+                    </div>
+                </div><br>
+                <div class="four wide column">
+                    <div class="ui message floating">
+                        <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                        <a href="{{ url_for('auth.register') }}">Sign up</a> to preserve your message.
                     </div>
                 </div>
                 <div class="four wide column right floated right aligned hide-on-mobile">
                     <p>
                         Fork me on <a href="https://github.com/wangtianxing1010">Github</a><br>
+                    </p>
                 </div>
             </div>
         </div>

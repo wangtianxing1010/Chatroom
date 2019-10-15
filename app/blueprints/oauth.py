@@ -9,14 +9,14 @@ from app.models import User
 oauth_bp = Blueprint("oauth", __name__)
 
 github = oauth.remote_app(
-    name = 'github',
-    consumer_key = os.getenv("GITHUB_CLIENT_ID"),
-    consumer_secret = os.getenv("GITHUB_CLIENT_SECRET"),
-    request_token_params = {"scope":"user"},
-    base_url = 'https://api.github.com/',
-    request_token_url = None,
-    access_token_method = "POST",
-    access_token_url = "https://github.com/login/oauth/access_token",
+    name='github',
+    consumer_key=os.getenv("GITHUB_CLIENT_ID"),
+    consumer_secret=os.getenv("GITHUB_CLIENT_SECRET"),
+    request_token_params={"scope": "user"},
+    base_url='https://api.github.com/',
+    request_token_url=None,
+    access_token_method="POST",
+    access_token_url="https://github.com/login/oauth/access_token",
     authorize_url="https://github.com/login/oauth/authorize",
 )
 
@@ -24,7 +24,7 @@ google = oauth.remote_app(
     name="google",
     consumer_key=os.getenv("GOOGLE_CLIENT_ID"),
     consumer_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
-    request_token_params={"scope":"email"},
+    request_token_params={"scope": "email"},
     base_url="https://www.googleapis.com/oauth2/v1/",
     request_token_url=None,
     access_token_url='https://accounts.google.com/o/oauth2/token',
@@ -35,12 +35,12 @@ google = oauth.remote_app(
 
 twitter = oauth.remote_app(
     name="twitter",
-    consumer_key = os.getenv("TWITTER_CLIENT_ID"),
-    consumer_secret = os.getenv("TWITTER_CLIENT_SECRET"),
-    base_url = "https://api.twitter.com/1.1/",
-    request_token_url = "https://api.twitter.com/oauth/request_token",
-    access_token_url = "https://api.twitter.com/oauth/access_token",
-    authorize_url = "https://api.twitter.com/oauth/authorize",
+    consumer_key=os.getenv("TWITTER_CLIENT_ID"),
+    consumer_secret=os.getenv("TWITTER_CLIENT_SECRET"),
+    base_url="https://api.twitter.com/1.1/",
+    request_token_url="https://api.twitter.com/oauth/request_token",
+    access_token_url="https://api.twitter.com/oauth/access_token",
+    authorize_url="https://api.twitter.com/oauth/authorize",
 )
 
 providers = {
@@ -50,10 +50,10 @@ providers = {
 }
 
 profile_endpoints = {
-     'github': 'user',
-     'google': 'userinfo',
-     'twitter': 'account/verify_credentials.json?include_email=true'
- }
+    'github': 'user',
+    'google': 'userinfo',
+    'twitter': 'account/verify_credentials.json?include_email=true'
+}
 
 
 def get_social_profile(provider, access_token):
@@ -92,6 +92,7 @@ def oauth_login(provider_name):
         return redirect(url_for('chat.home'))
 
     callback = url_for('.oauth_callback', provider_name=provider_name, _external=True)
+    print('callback', callback)
     return providers[provider_name].authorize(callback=callback)
 
 
@@ -119,7 +120,7 @@ def oauth_callback(provider_name):
 
     user = User.query.filter_by(email=email).first()
     if user is None:
-        user = User(username=username, website=website,github=github, email=email, bio=bio)
+        user = User(username=username, website=website, github=github, email=email, bio=bio)
         db.session.add(user)
         db.session.commit()
         login_user(user, remember=True)

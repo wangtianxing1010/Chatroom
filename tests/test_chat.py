@@ -16,8 +16,8 @@ class ChatTestCase(BaseTestCase):
         super(ChatTestCase, self).setUp()
 
         admin = User(
-            email='admin@test.com',
-            nickname='Admin User',
+            email='12@test.com',
+            nickname='Admin Tester',
             github='https://github.com/wangtianxing1010'
         )
         admin.set_password('123456')
@@ -126,7 +126,7 @@ class ChatTestCase(BaseTestCase):
         self.assertNotIn("Test Message 3", data)
 
     def test_delete_message(self):
-        self.login(email="admin@test.com", password="123456")
+        self.login(email="12@test.com", password="123456")
         response = self.client.delete(url_for('chat.delete_message', message_id=1))
         self.assertEqual(response.status_code, 204)
 
@@ -160,23 +160,22 @@ class ChatTestCase(BaseTestCase):
         response = self.client.get(url_for('chat.get_profile', user_id=2))
         data = response.get_data(as_text=True)
         self.assertIn("admin", data)
-        self.assertIn("Admin User", data)
+        self.assertIn("Admin Tester", data)
         self.assertIn("https://github.com/wangtianxing1010", data)
         self.assertIn('This user want to maintain an aura of mystique.', data)
 
     def test_edit_profile(self):
-        self.login(email='admin@test.com', password="123456")
+        self.login(email='12@test.com', password='123456')
         self.client.post(url_for('chat.profile'), data={
-            'nickname': "New Name replacing Admin User",
-            'github': 'https://github.com/1010',
-            'bio': 'new bio here it goes'
+            'nickname': 'New Name',
+            'github': 'https://github.com/helloflask',
+            'bio': 'blah...'
         }, follow_redirects=True)
         response = self.client.get(url_for('chat.get_profile', user_id=2))
         data = response.get_data(as_text=True)
-        self.assertIn('New Name replacing Admin User', data)
-        self.assertNotIn('Admin User', data)
-        self.assertIn('https://github.com/1010', data)
+        self.assertIn('New Name', data)
+        self.assertNotIn('Admin Tester', data)
+        self.assertIn('https://github.com/helloflask', data)
         self.assertNotIn('https://github.com/wangtianxing1010', data)
-        self.assertIn('new bio here it goes', data)
+        self.assertIn('blah...', data)
         self.assertNotIn('This user want to maintain an aura of mystique.', data)
-

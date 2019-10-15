@@ -37,18 +37,18 @@ blockquote p {
     word-wrap: normal;
 }
 
-.catchat {
+.chatroom {
     margin-left: 20px;
 }
 
-.catchat span {
+.chatroom span {
     padding-left: 10px;
     font-weight: bold;
     font-size: 18px;
     color: #f26202;
 }
 
-.catchat-text {
+.chatroom-text {
     font-weight: bold;
     font-size: 18px;
     color: #f26202;

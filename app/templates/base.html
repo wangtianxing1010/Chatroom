@@ -3,6 +3,7 @@
     {% block head %}
         <title>{% block title %}{% block page_title %}{% endblock %} - Chatroom{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='semantic-ui/semantic.min.css') }}">
@@ -38,7 +39,7 @@
 
 {% block nav %}
     <div class="ui top fixed borderless menu">
-        <a class="item catchat" href="{{ url_for('chat.home') }}">
+        <a class="item chatroom" href="{{ url_for('chat.home') }}">
             <img src="{{ url_for('static', filename='logo.png') }}">
             <span>Flask Chatroom</span>
         </a>
@@ -163,7 +164,7 @@
     <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/forms.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}?v=1.224"></script>
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
     <script type="text/javascript">
         var root_url = "{{ url_for('chat.home') }}";

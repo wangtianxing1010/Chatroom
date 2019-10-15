@@ -49,7 +49,7 @@ def get_messages():
     pagination = Message.query.order_by(Message.timestamp.desc()).paginate(page, per_page=current_app.config[
         "CHAT_MESSAGES_PER_PAGE"])
     messages = pagination.items
-    return render_template("chat/messages.html", messages=messages[::-1])
+    return render_template("chat/_messages.html", messages=messages[::-1])
 
 
 @chat_bp.route('/message/delete/<message_id>', methods=["DELETE"])
@@ -66,7 +66,8 @@ online_users = []
 
 
 @socketio.on('new message')
-def new_message(message_body):
+def new_message(message):
+    message_body = message
     html_message = to_html(message_body)
     message = Message(author=current_user._get_current_object(), body=html_message)
     db.session.add(message)
@@ -82,11 +83,23 @@ def new_message(message_body):
          broadcast=True)
 
 
-@socketio.on("new message", namespace="/anonymous")
+@socketio.on('new anonymous message')
 def new_anonymous_message(message_body):
+    anonymous_message(message_body, from_homepage=True)
+
+
+def anonymous_message(message_body, from_homepage=False):
     html_message = to_html(message_body)
     avatar = 'https://www.gravatar.com/avatar?d=mm'
     nickname = "Anonymous"
+
+    try:
+        user_id = current_user.id  # incognito user has id
+    except AttributeError:
+        user_id = 0
+
+    namespace = None if from_homepage else '/anonymous'
+
     emit("new message",
          {
              'message_html': render_template('chat/_anonymous_message.html',
@@ -96,9 +109,14 @@ def new_anonymous_message(message_body):
              'message_body': html_message,
              'gravatar': avatar,
              'nickname': nickname,
-             'user_id': current_user.id
+             'user_id': user_id
          },
-         broadcast=True, namespace="/anonymous")
+         broadcast=True, namespace=namespace)
+
+
+@socketio.on("new message", namespace="/anonymous")
+def new_incognito_message(message_body):
+    anonymous_message(message_body)
 
 
 @socketio.on("connect")
