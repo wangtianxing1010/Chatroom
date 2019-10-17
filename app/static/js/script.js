@@ -73,7 +73,6 @@ $(document).ready(function () {
             e.preventDefault();
             message = message_body
             if(current_user_id===0){
-                alert(current_user_id===0)
                 socket.emit('new anonymous message', message);
             } else {
                 socket.emit('new message', message);

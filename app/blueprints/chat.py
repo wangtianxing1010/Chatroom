@@ -114,7 +114,7 @@ def anonymous_message(message_body, from_homepage=False):
          broadcast=True, namespace=namespace)
 
 
-@socketio.on("new message", namespace="/anonymous")
+@socketio.on("new anonymous message", namespace="/anonymous")
 def new_incognito_message(message_body):
     anonymous_message(message_body)
 
