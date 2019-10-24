@@ -1,1 +1,0 @@
-web: flask db upgrade; flask forge; gunicorn microblog:app
