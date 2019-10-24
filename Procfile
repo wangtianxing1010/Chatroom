@@ -1,1 +1,1 @@
-web: flask db upgrade; flask forge; gunicorn chatroom:app
+web: flask forge; gunicorn chatroom:app
