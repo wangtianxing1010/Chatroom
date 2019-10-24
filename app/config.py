@@ -27,6 +27,10 @@ class ProductionConfig(BaseConfig):
     pass
 
 
+class HerokuConfig(ProductionConfig):
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+
+
 class TestingConfig(BaseConfig):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///"
@@ -36,5 +40,6 @@ class TestingConfig(BaseConfig):
 config = {
     "development": DevelopmentConfig,
     "production": ProductionConfig,
-    "testing": TestingConfig
+    "testing": TestingConfig,
+    "heroku": HerokuConfig
 }

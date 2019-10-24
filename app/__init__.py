@@ -12,6 +12,9 @@ from extensions import db, login_manager, csrf, moment, socketio, oauth
 from models import User, Message
 from config import config
 
+import logging
+from logging.handlers import SMTPHandler, RotatingFileHandler
+
 
 def create_app(config_name=None):
     if config_name is None:
@@ -24,6 +27,27 @@ def create_app(config_name=None):
     register_blueprints(app)
     register_errors(app)
     register_commands(app)
+
+    if not app.debug and not app.testing:
+        # Log to stdout config for heroku
+        if app.config['LOG_TO_STDOUT']:
+            stream_handler = logging.StreamHandler()
+            stream_handler.setLevel(logging.INFO)
+            app.logger.addHandler(stream_handler)
+        else:
+            if not os.path.exists('logs'):
+                os.mkdir('logs')
+            file_handler = RotatingFileHandler('logs/chatroom.log',
+                                               maxBytes=10240, backupCount=10)
+            file_handler.setFormatter(logging.Formatter(
+                '%(asctime)s %(levelname)s: %(message)s '
+                '[in %(pathname)s:%(lineno)d]'
+            ))
+            file_handler.setLevel(logging.INFO)
+            app.logger.addHandler(file_handler)
+
+        app.logger.setLevel(logging.INFO)
+        app.logger.info("Chatroom startup")
 
     return app
 
@@ -119,3 +143,4 @@ def register_commands(app):
 
         db.session.commit()
         click.echo('Done.')
+

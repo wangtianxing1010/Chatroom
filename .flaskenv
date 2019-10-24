@@ -1,4 +1,4 @@
-FLASK_APP=app
+FLASK_APP=chatroom.py
 FLASK_ENV=development
 # Register your own id and key, write here and move them into .env
 GITHUB_CLIENT_ID=test
