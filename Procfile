@@ -1,1 +1,1 @@
-web: flask forge; gunicorn app:create_app()
+web: flask forge; gunicorn "app:create_app('heroku')"
