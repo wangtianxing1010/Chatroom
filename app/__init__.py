@@ -88,7 +88,7 @@ def register_errors(app):
 
 def register_commands(app):
     @app.cli.command()
-    @click.option("--drop", is_flag=True, help="Create after droping tables")
+    @click.option("--drop", is_flag=True, help="Create after dropping tables")
     def initdb(drop):
         if drop:
             click.confirm("This operation will delete the database, continue?", abort=True)
