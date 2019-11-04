@@ -11,7 +11,7 @@ from extensions import db, login_manager
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    nickname = db.Column(db.String(16))
+    nickname = db.Column(db.String(36))
     password_hash = db.Column(db.String(250))
     access_token = db.Column(db.String(250))
     email_hash = db.Column(db.String(250))

@@ -27,12 +27,14 @@
                         {% endif %}
                     </div>
                 </div><br>
-                <div class="four wide column">
-                    <div class="ui message floating">
-                        <a href="{{ url_for('auth.login') }}">Sign in</a> or
-                        <a href="{{ url_for('auth.register') }}">Sign up</a> to preserve your message.
+                {% if !current_user.is_authenticated %}
+                    <div class="four wide column">
+                        <div class="ui message floating">
+                            <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                            <a href="{{ url_for('auth.register') }}">Sign up</a> to preserve your message.
+                        </div>
                     </div>
-                </div>
+                {% endif %}
                 <div class="four wide column right floated right aligned hide-on-mobile">
                     <p>
                         Fork me on <a href="https://github.com/wangtianxing1010">Github</a><br>
