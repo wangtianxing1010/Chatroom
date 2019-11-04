@@ -27,7 +27,7 @@
                         {% endif %}
                     </div>
                 </div><br>
-                {% if !current_user.is_authenticated %}
+                {% if not current_user.is_authenticated %}
                     <div class="four wide column">
                         <div class="ui message floating">
                             <a href="{{ url_for('auth.login') }}">Sign in</a> or
