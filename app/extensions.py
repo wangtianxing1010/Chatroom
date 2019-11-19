@@ -5,6 +5,8 @@ from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
+# todo from dotenv import load_dotenv
+
 db = SQLAlchemy()
 socketio = SocketIO()
 login_manager = LoginManager()

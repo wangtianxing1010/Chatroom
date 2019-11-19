@@ -48,6 +48,12 @@
 {% block scripts %}
     {{ super() }}
     <script type="text/javascript">
-        var socket = io('/');
+        var socket = io('/', {
+          transports: ['websocket']
+        });
+
+        socket.on("reconnect_attempt", ()=>{
+            socket.io.opts.transports = ['polling', 'websocket'];
+        });
     </script>
 {% endblock %}

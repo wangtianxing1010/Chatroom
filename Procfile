@@ -1,1 +1,1 @@
-web: flask forge; gunicorn -k eventlet "app:create_app('heroku')"
+web: flask forge; gunicorn -k eventlet "app:create_app()"

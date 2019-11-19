@@ -24,12 +24,12 @@ class DevelopmentConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
-    pass
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", prefix + os.path.join(basedir, "chatroom.db"))
 
 
 class HerokuConfig(ProductionConfig):
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
-
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", prefix + os.path.join(basedir, "heroku.db"))
 
 class TestingConfig(BaseConfig):
     TESTING = True
