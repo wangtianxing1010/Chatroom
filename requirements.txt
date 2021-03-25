@@ -50,7 +50,7 @@ python-dotenv==0.8.2
 python-engineio==2.2.0
 python-socketio==2.0.0
 pytz==2018.5
-PyYAML==3.13
+PyYAML==5.4
 requests==2.19.1
 requests-oauthlib==1.0.0
 six==1.11.0
