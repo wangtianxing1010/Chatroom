@@ -35,7 +35,7 @@ MarkupSafe==1.0
 marshmallow==2.18.1
 mock==2.0.0
 oauthlib==2.1.0
-paramiko==2.4.1
+paramiko==2.10.1
 pathtools==0.1.2
 pbr==4.2.0
 pipenv==2018.7.1
